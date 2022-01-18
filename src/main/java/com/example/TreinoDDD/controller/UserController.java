@@ -1,4 +1,4 @@
-package com.example.TreinoDDD;
+package com.example.TreinoDDD.controller;
 
 import com.example.TreinoDDD.dto.UserDTO;
 import com.example.TreinoDDD.facade.IFacade;

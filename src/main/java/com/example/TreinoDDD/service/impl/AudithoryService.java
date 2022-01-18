@@ -20,16 +20,6 @@ public class AudithoryService implements IAudithoryService {
     }
 
     @Override
-    public void edit(Audithory audithory) {
-        repository.saveAndFlush(audithory);
-    }
-
-    @Override
-    public void delete(Audithory audithory) {
-        repository.delete(audithory);
-    }
-
-    @Override
     public List<Audithory> findAll() {
         return repository.findAll();
     }
