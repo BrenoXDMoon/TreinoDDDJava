@@ -1,6 +1,5 @@
 package com.example.TreinoDDD.entity;
 
-import com.example.TreinoDDD.dto.DTOEntity;
 import lombok.Data;
 
 import javax.persistence.GeneratedValue;
@@ -9,12 +8,26 @@ import javax.persistence.Id;
 import javax.persistence.MappedSuperclass;
 
 @MappedSuperclass
-@Data
 public abstract class DomainEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     protected Long id;
+    protected Boolean active;
 
-    public abstract DTOEntity convertToDto();
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public Boolean getActive() {
+        return active;
+    }
+
+    public void setActive(Boolean active) {
+        this.active = active;
+    }
 }

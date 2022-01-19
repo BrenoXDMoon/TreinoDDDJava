@@ -1,7 +1,6 @@
-package com.example.TreinoDDD.dto;
+package com.example.TreinoDDD.facade.dto;
 
 import com.example.TreinoDDD.entity.DomainEntity;
 
 public abstract class DTOEntity {
-    public abstract DomainEntity convertToEntity();
 }

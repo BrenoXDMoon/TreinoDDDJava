@@ -1,8 +1,5 @@
 package com.example.TreinoDDD.entity;
 
-import com.example.TreinoDDD.dto.AudithoryDTO;
-import com.example.TreinoDDD.dto.DTOEntity;
-import com.example.TreinoDDD.dto.UserDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -10,9 +7,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.*;
 
 @Entity
-@Data
-@AllArgsConstructor
-@NoArgsConstructor
 public class Audithory extends DomainEntity{
 
     private String operationName;
@@ -20,8 +14,28 @@ public class Audithory extends DomainEntity{
     @JoinColumn(name = "operation_user_ID")
     private User operationUser;
 
-    @Override
-    public DTOEntity convertToDto() {
-        return new AudithoryDTO(this.operationName, (UserDTO) this.getOperationUser().convertToDto());
+    public Audithory() {
+
+    }
+
+    public Audithory(String operationName, User operationUser) {
+        this.operationName = operationName;
+        this.operationUser = operationUser;
+    }
+
+    public String getOperationName() {
+        return operationName;
+    }
+
+    public void setOperationName(String operationName) {
+        this.operationName = operationName;
+    }
+
+    public User getOperationUser() {
+        return operationUser;
+    }
+
+    public void setOperationUser(User operationUser) {
+        this.operationUser = operationUser;
     }
 }

@@ -1,4 +1,4 @@
-package com.example.TreinoDDD.dto;
+package com.example.TreinoDDD.facade.dto;
 
 import com.example.TreinoDDD.entity.Audithory;
 import com.example.TreinoDDD.entity.DomainEntity;
@@ -15,8 +15,4 @@ public class AudithoryDTO extends DTOEntity {
     private String operationName;
     private UserDTO operationUser;
 
-    @Override
-    public DomainEntity convertToEntity() {
-        return new Audithory(this.operationName,(User)this.operationUser.convertToEntity());
-    }
 }

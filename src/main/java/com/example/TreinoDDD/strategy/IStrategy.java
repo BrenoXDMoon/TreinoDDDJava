@@ -1,9 +1,9 @@
 package com.example.TreinoDDD.strategy;
 
-import com.example.TreinoDDD.dto.DTOEntity;
+import com.example.TreinoDDD.entity.DomainEntity;
 
 public interface IStrategy {
 
-    Object process(DTOEntity entity);
+    Object process(DomainEntity entity);
 
 }

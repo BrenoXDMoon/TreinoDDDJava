@@ -1,12 +1,15 @@
 package com.example.TreinoDDD.controller;
 
-import com.example.TreinoDDD.dto.UserDTO;
-import com.example.TreinoDDD.facade.IFacade;
-import com.example.TreinoDDD.service.IUserService;
+import com.example.TreinoDDD.facade.dto.UserDTO;
+import com.example.TreinoDDD.facade.IUserFacade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -14,38 +17,32 @@ import java.util.List;
 public class UserController {
 
     @Autowired
-    private IUserService service;
-
-    @Autowired
-    private IFacade facade;
+    private IUserFacade facade;
 
     @GetMapping
-    public List<UserDTO> findAll(){
-
-        List<UserDTO> result = new ArrayList<UserDTO>();
-
-        service.findAll().stream().forEach(u -> result.add( (UserDTO) u.convertToDto()));
-
-        return result;
+    public ResponseEntity<Page<UserDTO>> findAll(Pageable pageable){
+        return ResponseEntity.status(HttpStatus.OK).body(facade.getAllUsers(pageable));
     }
 
-    @PostMapping
-    public UserDTO save(UserDTO user) {
-        return (UserDTO) facade.convertToDto(service.save(user));
-    }
-
-    @PutMapping
-    public UserDTO edit(UserDTO user) {
-        return (UserDTO) facade.convertToDto(service.edit(user));
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<UserDTO> save(@RequestBody UserDTO user) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(facade.save(user));
     }
 
     @GetMapping("{id}")
-    public UserDTO findById(@PathVariable("id") Long id) {
-        return (UserDTO) facade.convertToDto(service.findById(id));
+    public ResponseEntity<UserDTO> findById(@PathVariable("id") Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(facade.findUserById(id));
     }
 
-    @DeleteMapping
-    public void delete(UserDTO user) {
-        service.remove(user);
+    @PutMapping(value = "{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public  ResponseEntity<UserDTO> edit(@RequestBody UserDTO user, @PathVariable("id") Long id) {
+        return ResponseEntity.status(HttpStatus.OK).body(facade.edit(id, user));
+    }
+
+    @DeleteMapping("{id}")
+    public ResponseEntity<UserDTO> delete(@PathVariable("id") Long id) {
+        facade.delete(id);
+
+        return ResponseEntity.status(HttpStatus.OK).body(facade.delete(id));
     }
 }

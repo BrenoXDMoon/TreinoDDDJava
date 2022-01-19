@@ -1,13 +1,14 @@
 package com.example.TreinoDDD.strategy;
 
-import com.example.TreinoDDD.dto.DTOEntity;
+import com.example.TreinoDDD.entity.DomainEntity;
 import com.example.TreinoDDD.entity.User;
+import org.springframework.stereotype.Component;
 
-public class ValidateLastName implements IStrategy{
+@Component
+public class ValidateUserLastName implements IStrategy{
     @Override
-    public Object process(DTOEntity entity) {
-
-        User user = (User) entity.convertToEntity();
+    public Object process(DomainEntity entity) {
+        User user = (User) entity;
 
         if(user.getFirstName().contains(" ")){
             String[] arrayName = user.getFirstName().split(" ");
@@ -21,6 +22,6 @@ public class ValidateLastName implements IStrategy{
             user.setLastName(sb.toString());
         }
 
-        return user.convertToDto();
+        return user;
     }
 }

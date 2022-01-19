@@ -1,14 +1,23 @@
-package com.example.TreinoDDD.entity;
+package com.example.TreinoDDD.facade.dto;
 
-import lombok.Data;
+import lombok.Builder;
 
-import javax.persistence.Entity;
+@Builder
+public class UserDTO extends DTOEntity {
 
-@Entity
-public class User extends DomainEntity{
     private String firstName;
     private String lastName;
     private String email;
+
+    public UserDTO() {
+
+    }
+
+    public UserDTO(String firstName, String lastName, String email) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+    }
 
     public String getFirstName() {
         return firstName;

@@ -1,16 +1,16 @@
 package com.example.TreinoDDD.service;
 
-import com.example.TreinoDDD.dto.UserDTO;
-import com.example.TreinoDDD.entity.DomainEntity;
-import com.example.TreinoDDD.entity.User;
 
-import java.util.List;
+import com.example.TreinoDDD.entity.User;
+import com.example.TreinoDDD.facade.dto.UserDTO;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface IUserService {
 
-    User save(UserDTO dto);
-    User edit(UserDTO dto);
-    void remove(UserDTO dto);
-    List<User> findAll();
+    User save(User dto);
+    User edit(User dto);
+    User delete(User dto);
+    Page<User> findAll(Pageable pageable);
     User findById(Long id);
 }

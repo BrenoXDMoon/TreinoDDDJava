@@ -1,7 +1,5 @@
 package com.example.TreinoDDD.entity;
 
-import com.example.TreinoDDD.dto.DTOEntity;
-import com.example.TreinoDDD.dto.PasswordDTO;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -19,8 +17,4 @@ public class Password extends DomainEntity{
     @Transient
     private String confirmPassword;
 
-    @Override
-    public DTOEntity convertToDto() {
-        return new PasswordDTO(this.password, this.confirmPassword);
-    }
 }

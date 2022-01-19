@@ -1,18 +1,16 @@
 package com.example.TreinoDDD.service.impl;
 
-import com.example.TreinoDDD.dto.UserDTO;
 import com.example.TreinoDDD.entity.Audithory;
 import com.example.TreinoDDD.entity.User;
-import com.example.TreinoDDD.facade.IFacade;
+import com.example.TreinoDDD.facade.dto.UserDTO;
 import com.example.TreinoDDD.repositories.UserRepository;
 import com.example.TreinoDDD.service.IAudithoryService;
 import com.example.TreinoDDD.service.IUserService;
-import com.example.TreinoDDD.strategy.ValidateLastName;
+import com.example.TreinoDDD.strategy.ValidateUserLastName;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
-import java.util.Optional;
 
 @Service
 public class UserService implements IUserService {
@@ -24,36 +22,41 @@ public class UserService implements IUserService {
     private IAudithoryService audithoryService;
 
     @Autowired
-    private IFacade facade;
+    private ValidateUserLastName validateUserLastName;
 
     @Override
-    public User save(UserDTO dto) {
-        ValidateLastName vln = new ValidateLastName();
-        vln.process(dto);
-        User user =  (User) facade.convertToEntity(dto);
-        audithoryService.save(new Audithory("Registro", user));
-        return repository.saveAndFlush(user);
+    public User save(User user) {
+
+        validateUserLastName.process(user);
+        user.setActive(true);
+        repository.saveAndFlush(user);
+        audithoryService.save(new Audithory("Registro de Usuário", user));
+
+        return user;
     }
 
     @Override
-    public User edit(UserDTO dto) {
-        ValidateLastName vln = new ValidateLastName();
-        vln.process(dto);
-        User user =  (User) facade.convertToEntity(dto);
-        audithoryService.save(new Audithory("Alteração de Registro", user));
-        return repository.saveAndFlush(user);
+    public User edit(User user) {
+
+        validateUserLastName.process(user);
+        repository.saveAndFlush(user);
+        audithoryService.save(new Audithory("Atualização de Registro de Usuário", user));
+
+        return user;
     }
 
     @Override
-    public void remove(UserDTO dto) {
-        User user =  (User) facade.convertToEntity(dto);
-        audithoryService.save(new Audithory("Exclusão de Registro", user));
-        repository.delete(user);
+    public User delete(User user) {
+
+        user.setActive(false);
+        repository.saveAndFlush(user);
+        audithoryService.save(new Audithory("Exclusão de Registro de Usuário", user));
+        return user;
     }
 
     @Override
-    public List<User> findAll() {
-        return repository.findAll();
+    public Page<User> findAll(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
     @Override
