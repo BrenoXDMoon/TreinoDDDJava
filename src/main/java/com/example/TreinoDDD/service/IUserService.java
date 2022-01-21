@@ -2,7 +2,6 @@ package com.example.TreinoDDD.service;
 
 
 import com.example.TreinoDDD.entity.User;
-import com.example.TreinoDDD.facade.dto.UserDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 

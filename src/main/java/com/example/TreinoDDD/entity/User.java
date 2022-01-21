@@ -1,7 +1,5 @@
 package com.example.TreinoDDD.entity;
 
-import lombok.Data;
-
 import javax.persistence.Entity;
 
 @Entity
@@ -9,6 +7,23 @@ public class User extends DomainEntity{
     private String firstName;
     private String lastName;
     private String email;
+
+    public User() {
+
+    }
+
+    public User(String firstName, String lastName, String email) {
+        this.setFirstName(firstName);
+        this.setLastName(lastName);
+        this.setEmail(email);
+    }
+
+    public User(Long id, String firstName, String lastName, String email) {
+        this.setId(id);
+        this.setFirstName(firstName);
+        this.setLastName(lastName);
+        this.setEmail(email);
+    }
 
     public String getFirstName() {
         return firstName;

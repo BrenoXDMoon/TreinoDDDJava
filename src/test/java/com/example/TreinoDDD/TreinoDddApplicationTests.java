@@ -1,78 +1,50 @@
 package com.example.TreinoDDD;
 
-import com.example.TreinoDDD.facade.IUserFacade;
-import com.example.TreinoDDD.facade.dto.UserDTO;
+import com.example.TreinoDDD.entity.User;
+import com.example.TreinoDDD.service.IUserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.domain.Pageable;
+
+import static org.aspectj.apache.bcel.Repository.instanceOf;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
 class TreinoDddApplicationTests {
 
+	private static User user;
+
 	@BeforeAll
 	public static void init(){
-
+		user = new User("Felipe Dilon", "Silva", "felipeno@youtube.com");
 		System.out.println("Iniciando testes");
 	}
 
 	@Autowired
-	private IUserFacade userFacade;
+	private IUserService service;
 
 	@Test
 	public void registerUser() {
+		user = service.save(user);
 
-		try{
-			userFacade.save(new UserDTO("Felca", "Felipeno", "felipeno@youtube.com"));
-			System.out.println("Sucesso ao salvar!!!!");
-		}catch(Exception e){
-			Assertions.fail("Falha ao Salvar");
-		}
+		assertNotNull(user, "Objeto de registro nulo");
 	}
 
 	@Test
 	public void updateUser(){
-		try{
-			userFacade.edit(12L, new UserDTO("Felca", "Felipeno", "felipeno@youtube.com"));
-			System.out.println("Sucesso ao editar!!!!");
-		}catch(Exception e){
-			Assertions.fail("Falha ao Editar");
-		}
+
+		user.setFirstName("Felca");
+		user.setLastName("Felipeno");
+		user.setEmail("felipeno@youtube.com");
+
+		assertNotNull(service.edit(user), "Objeto de edição nulo");
 	}
 
 	@Test
-	public void deleteUser(){
-
-		try{
-			userFacade.delete(12L);
-			System.out.println("Sucesso ao deletar!!!!");
-		}catch(Exception e){
-			Assertions.fail("Falha ao Deletar");
-		}
+	public void deleteUserByAnId(){
+		assertNotNull(service.delete(service.findById(user.getId())), "Objeto de exclusão nulo");
 	}
-
-	@Test
-	public void getAllUsers(Pageable pageable){
-		try{
-			System.out.println(userFacade.getAllUsers(pageable));
-			System.out.println("Sucesso ao consultar!!!!");
-		}catch(Exception e){
-			Assertions.fail("Falha ao consultar");
-		}
-	}
-
-	@Test
-	public void getUserByID(){
-
-		try{
-			System.out.println(userFacade.findUserById(8L));
-			System.out.println("Sucesso ao consultar por ID!!!!");
-		}catch(Exception e){
-			Assertions.fail("Falha ao consultar por ID");
-		}
-
-	}
-
 }
