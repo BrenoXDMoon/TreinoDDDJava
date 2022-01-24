@@ -1,6 +1,5 @@
 package com.example.TreinoDDD.facade;
 
-import com.example.TreinoDDD.entity.Audithory;
 import com.example.TreinoDDD.entity.User;
 import com.example.TreinoDDD.facade.dto.UserDTO;
 import com.example.TreinoDDD.facade.mapper.UserMapper;
