@@ -2,7 +2,6 @@ package com.example.TreinoDDD;
 
 import com.example.TreinoDDD.entity.User;
 import com.example.TreinoDDD.service.IUserService;
-import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,18 +12,18 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @SpringBootTest
-class TreinoDddApplicationTests {
+class UserServiceJUnitTests {
 
 	private static User user;
+
+	@Autowired
+	private IUserService service;
 
 	@BeforeAll
 	public static void init(){
 		user = new User("Felipe Dilon", "Silva", "felipeno@youtube.com");
 		System.out.println("Iniciando testes");
 	}
-
-	@Autowired
-	private IUserService service;
 
 	@Test
 	public void registerUser() {

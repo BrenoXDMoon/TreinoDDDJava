@@ -1,7 +1,7 @@
 package com.example.TreinoDDD.service.impl;
 
 import com.example.TreinoDDD.entity.Audithory;
-import com.example.TreinoDDD.repositories.AuditoryRepository;
+import com.example.TreinoDDD.repositories.AudithoryRepository;
 import com.example.TreinoDDD.service.IAudithoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,8 +11,12 @@ import java.util.List;
 @Service
 public class AudithoryService implements IAudithoryService {
 
+    private AudithoryRepository repository;
+
     @Autowired
-    private AuditoryRepository repository;
+    public AudithoryService(AudithoryRepository repository) {
+        this.repository = repository;
+    }
 
     @Override
     public void save(Audithory audithory) {

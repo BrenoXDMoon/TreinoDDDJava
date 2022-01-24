@@ -15,14 +15,17 @@ import org.springframework.stereotype.Service;
 @Service
 public class UserService implements IUserService {
 
-    @Autowired
     private UserRepository repository;
-
-    @Autowired
     private IAudithoryService audithoryService;
+    private ValidateUserLastName validateUserLastName;
 
     @Autowired
-    private ValidateUserLastName validateUserLastName;
+    public UserService(UserRepository repository, IAudithoryService audithoryService, ValidateUserLastName validateUserLastName) {
+
+        this.validateUserLastName = validateUserLastName;
+        this.repository = repository;
+        this.audithoryService = audithoryService;
+    }
 
     @Override
     public User save(User user) {
